@@ -6,21 +6,6 @@ namespace GildedRose;
 
 final class Item
 {
-    /**
-     * @var string
-     */
-    public $name;
-
-    /**
-     * @var int
-     */
-    public $sell_in;
-
-    /**
-     * @var int
-     */
-    public $quality;
-
     public function __construct(string $name, int $sell_in, int $quality)
     {
         $this->name = $name;
