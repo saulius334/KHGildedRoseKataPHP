@@ -22,24 +22,24 @@ final class GildedRose
     public function updateQuality(): void
     {
         $inventory = [
+            new Other(),
             new AgedBrie(),
             new Backstage(),
             new Sulfuras(),
             new Conjured(),
-            new Other(),
         ];
         foreach ($this->items as $item) {
             $item->sell_in--;
             if ($item->name == 'Aged Brie') {
-                $inventory[0]->updateQuality($item);
-            } else if ($item->name == 'Backstage passes to a TAFKAL80ETC concert') {
                 $inventory[1]->updateQuality($item);
-            } else if ($item->name == 'Sulfuras, Hand of Ragnaros') {
+            } else if ($item->name == 'Backstage passes to a TAFKAL80ETC concert') {
                 $inventory[2]->updateQuality($item);
-            } else if ($item->name == 'Conjured Mana Cake') {
+            } else if ($item->name == 'Sulfuras, Hand of Ragnaros') {
                 $inventory[3]->updateQuality($item);
-            } else {
+            } else if ($item->name == 'Conjured Mana Cake') {
                 $inventory[4]->updateQuality($item);
+            } else {
+                $inventory[0]->updateQuality($item);
             }
         }
     //     foreach ($this->items as $item) {
