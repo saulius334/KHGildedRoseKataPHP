@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use GildedRose\Item;
-use GildedRose\GildedRose;
+use GildedRose\Models\Item;
+use GildedRose\Client\GildedRose;
 use PHPUnit\Framework\TestCase;
 
 class GildedRoseTest extends TestCase

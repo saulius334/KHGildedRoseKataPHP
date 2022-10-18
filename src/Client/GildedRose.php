@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace GildedRose;
+namespace GildedRose\Client;
 
-use GildedRose\Other;
-use GildedRose\AgedBrie;
-use GildedRose\Conjured;
-use GildedRose\Sulfuras;
-use GildedRose\Backstage;
+use GildedRose\Models\Other;
+use GildedRose\Models\AgedBrie;
+use GildedRose\Models\Conjured;
+use GildedRose\Models\Sulfuras;
+use GildedRose\Models\Backstage;
 
 
 final class GildedRose
