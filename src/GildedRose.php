@@ -25,25 +25,21 @@ final class GildedRose
             new AgedBrie(),
             new Backstage(),
             new Sulfuras(),
-            new Other(),
             new Conjured(),
+            new Other(),
         ];
         foreach ($this->items as $item) {
+            $item->sell_in--;
             if ($item->name == 'Aged Brie') {
-                $agedBrie = new AgedBrie;
                 $inventory[0]->updateQuality($item);
             } else if ($item->name == 'Backstage passes to a TAFKAL80ETC concert') {
-                $backstage = new Backstage;
-                $backstage->updateQuality($item);
+                $inventory[1]->updateQuality($item);
             } else if ($item->name == 'Sulfuras, Hand of Ragnaros') {
-                $sulfuras = new Sulfuras;
-                $sulfuras->updateQuality($item);
+                $inventory[2]->updateQuality($item);
             } else if ($item->name == 'Conjured Mana Cake') {
-                $conjured = new Conjured;
-                $conjured->updateQuality($item);
+                $inventory[3]->updateQuality($item);
             } else {
-                $other = new Other;
-                $other->updateQuality($item);
+                $inventory[4]->updateQuality($item);
             }
         }
     //     foreach ($this->items as $item) {
