@@ -17,14 +17,9 @@ Recommended:
 Clone the repository
 
 ```sh
-git clone git@github.com:emilybache/GildedRose-Refactoring-Kata.git
+git clone git@github.com:saulius334/KHGildedRoseKataPHP.git
 ```
 
-or
-
-```shell script
-git clone https://github.com/emilybache/GildedRose-Refactoring-Kata.git
-```
 
 Install all the dependencies using composer
 
@@ -43,19 +38,6 @@ The project uses composer to install:
 - [Easy Coding Standard (ECS)](https://github.com/symplify/easy-coding-standard)
 - [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer/wiki)
 
-## Folders
-
-- `src` - contains the two classes:
-    - `Item.php` - this class should not be changed
-    - `GildedRose.php` - this class needs to be refactored, and the new feature added
-- `tests` - contains the tests
-    - `GildedRoseTest.php` - starter test.
-        - Tip: ApprovalTests has been included as a dev dependency, see the PHP version of
-          the [Theatrical Players Refactoring Kata](https://github.com/emilybache/Theatrical-Players-Refactoring-Kata/)
-          for an example
-- `Fixture`
-    - `texttest_fixture.php` this could be used by an ApprovalTests, or run from the command line
-
 ## Testing
 
 PHPUnit is configured for testing, a composer script has been provided. To run the unit tests, from the root of the PHP
@@ -63,13 +45,6 @@ project run:
 
 ```shell script
 composer test
-```
-
-A Windows a batch file has been created, like an alias on Linux/Mac (e.g. `alias pu="composer test"`), the same
-PHPUnit `composer test` can be run:
-
-```shell script
-pu
 ```
 
 ### Tests with Coverage Report
