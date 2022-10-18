@@ -173,7 +173,7 @@ class GildedRoseTest extends TestCase
         $this->assertEquals($items[0]->sell_in,50);
     }
 //Sulfuras end
-// Other start
+// Elixir + vest start
 public function testElixirUpdate() {
     $items = [new Item('Elixir of the Mongoose', 15, 5)];
     $gildedRose = new GildedRose($items);
@@ -188,6 +188,14 @@ public function testElixirSellinBelowZeroUpdate() {
     $gildedRose->updateQuality();
     $this->assertEquals($items[0]->name,'Elixir of the Mongoose');
     $this->assertEquals($items[0]->quality,3);
+    $this->assertEquals($items[0]->sell_in,-3);
+}
+public function testElixirQualityZeroUpdate() {
+    $items = [new Item('Elixir of the Mongoose', -2, 0)];
+    $gildedRose = new GildedRose($items);
+    $gildedRose->updateQuality();
+    $this->assertEquals($items[0]->name,'Elixir of the Mongoose');
+    $this->assertEquals($items[0]->quality,0);
     $this->assertEquals($items[0]->sell_in,-3);
 }
 public function testVestUpdate() {
@@ -206,31 +214,39 @@ public function testVestSellinBelowZeroUpdate() {
     $this->assertEquals($items[0]->quality,3);
     $this->assertEquals($items[0]->sell_in,-3);
 }
-//Other end
+public function testVestQualityZeroUpdate() {
+    $items = [new Item('+5 Dexterity Vest', -2, 0)];
+    $gildedRose = new GildedRose($items);
+    $gildedRose->updateQuality();
+    $this->assertEquals($items[0]->name,'+5 Dexterity Vest');
+    $this->assertEquals($items[0]->quality,0);
+    $this->assertEquals($items[0]->sell_in,-3);
+}
+//Elixir + vest end
 //Start Conjured
-public function testConjuredUpdate() {
-    $items = [new Item('Conjured Mana Cake', 50, 50)];
-    $gildedRose = new GildedRose($items);
-    $gildedRose->updateQuality();
-    $this->assertEquals($items[0]->name,'Conjured Mana Cake');
-    $this->assertEquals($items[0]->quality,48);
-    $this->assertEquals($items[0]->sell_in,49);
-}
-public function testConjuredSellinZeroUpdate() {
-    $items = [new Item('Conjured Mana Cake', 0, 50)];
-    $gildedRose = new GildedRose($items);
-    $gildedRose->updateQuality();
-    $this->assertEquals($items[0]->name,'Conjured Mana Cake');
-    $this->assertEquals($items[0]->quality,46);
-    $this->assertEquals($items[0]->sell_in,-1);
-}
-public function testConjuredSellinBelowZeroUpdate() {
-    $items = [new Item('Conjured Mana Cake', -5, 50)];
-    $gildedRose = new GildedRose($items);
-    $gildedRose->updateQuality();
-    $this->assertEquals($items[0]->name,'Conjured Mana Cake');
-    $this->assertEquals($items[0]->quality,46);
-    $this->assertEquals($items[0]->sell_in,-6);
-}
-//Conjured end
+// public function testConjuredUpdate() {
+//     $items = [new Item('Conjured Mana Cake', 50, 50)];
+//     $gildedRose = new GildedRose($items);
+//     $gildedRose->updateQuality();
+//     $this->assertEquals($items[0]->name,'Conjured Mana Cake');
+//     $this->assertEquals($items[0]->quality,48);
+//     $this->assertEquals($items[0]->sell_in,49);
+// }
+// public function testConjuredSellinZeroUpdate() {
+//     $items = [new Item('Conjured Mana Cake', 0, 50)];
+//     $gildedRose = new GildedRose($items);
+//     $gildedRose->updateQuality();
+//     $this->assertEquals($items[0]->name,'Conjured Mana Cake');
+//     $this->assertEquals($items[0]->quality,46);
+//     $this->assertEquals($items[0]->sell_in,-1);
+// }
+// public function testConjuredSellinBelowZeroUpdate() {
+//     $items = [new Item('Conjured Mana Cake', -5, 50)];
+//     $gildedRose = new GildedRose($items);
+//     $gildedRose->updateQuality();
+//     $this->assertEquals($items[0]->name,'Conjured Mana Cake');
+//     $this->assertEquals($items[0]->quality,46);
+//     $this->assertEquals($items[0]->sell_in,-6);
+// }
+// //Conjured end
 }
