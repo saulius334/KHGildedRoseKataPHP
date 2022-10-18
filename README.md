@@ -24,7 +24,6 @@ git clone git@github.com:saulius334/KHGildedRoseKataPHP.git
 Install all the dependencies using composer
 
 ```shell script
-cd ./GildedRose-Refactoring-Kata/php
 composer install
 ```
 
