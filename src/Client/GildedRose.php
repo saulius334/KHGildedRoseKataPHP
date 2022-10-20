@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace GildedRose\Client;
 
-use GildedRose\Factories\InventoryFactory;
+use GildedRose\Factories\ItemFactory;
 
 final class GildedRose
 {
@@ -16,12 +16,12 @@ final class GildedRose
     
     public function updateQuality(): void
     {
-        $inventory = new InventoryFactory();
+        $currentItem = new ItemFactory();
         foreach ($this->items as $item) {
-            if ($item->name != 'Sulfuras, Hand of Ragnaros') {
+            if ($item->name !== 'Sulfuras, Hand of Ragnaros') {
                 $item->sell_in--;
             }
-            $itemToUpdate = $inventory->createInventory($item);
+            $itemToUpdate = $currentItem->createCurrentItem($item);
             $itemToUpdate->updateQuality($item);
         }
     }
