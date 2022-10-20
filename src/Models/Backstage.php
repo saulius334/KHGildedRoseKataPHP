@@ -7,7 +7,7 @@ namespace GildedRose\Models;
 use GildedRose\Interfaces\ItemInterface;
 
 class Backstage implements ItemInterface {
-    public function updateQuality(Item $item): self
+    public function updateItemQuality(Item $item): self
     {
         $item->quality++;
         if ($item->sell_in <= 10) {

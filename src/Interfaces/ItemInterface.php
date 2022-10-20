@@ -7,5 +7,5 @@ namespace GildedRose\Interfaces;
 use GildedRose\Models\Item;
 
 interface ItemInterface {
-    public function updateQuality(Item $item): self;
+    public function updateItemQuality(Item $item): self;
 }
