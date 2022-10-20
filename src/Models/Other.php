@@ -7,7 +7,7 @@ namespace GildedRose\Models;
 use GildedRose\Interfaces\ItemInterface;
 
 class Other implements ItemInterface {
-    public function updateQuality(Item $item): void
+    public function updateQuality(Item $item): self
     {
         $item->quality--;
         if ($item->sell_in <= 0) {
@@ -16,6 +16,7 @@ class Other implements ItemInterface {
         if ($item->quality > 50) {
             $item->quality = 50;
         }
+        return $this;
     }
 
 }

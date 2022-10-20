@@ -7,9 +7,10 @@ namespace GildedRose\Models;
 use GildedRose\Interfaces\ItemInterface;
 
 class Sulfuras implements ItemInterface {
-    public function updateQuality(Item $item): void
+    public function updateQuality(Item $item): self
     {
         $item->quality = 80;
+        return $this;
     }
 
 }

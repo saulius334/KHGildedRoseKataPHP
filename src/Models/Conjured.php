@@ -7,7 +7,7 @@ namespace GildedRose\Models;
 use GildedRose\Interfaces\ItemInterface;
 
 class Conjured implements ItemInterface {
-    public function updateQuality(Item $item): void
+    public function updateQuality(Item $item): self
     {
         $item->quality -= 2;
         if ($item->sell_in <= 0) {
@@ -16,6 +16,7 @@ class Conjured implements ItemInterface {
         if ($item->quality > 50) {
             $item->quality = 50;
         }
+        return $this;
     }
 
 }

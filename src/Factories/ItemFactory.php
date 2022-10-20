@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace GildedRose\Factories;
 
 use GildedRose\Interfaces\ItemFactoryInterface;
+use GildedRose\Interfaces\ItemInterface;
 use GildedRose\Models\Item;
 use GildedRose\Models\Other;
 use GildedRose\Models\AgedBrie;
@@ -13,7 +14,7 @@ use GildedRose\Models\Sulfuras;
 use GildedRose\Models\Backstage;
 
 class ItemFactory implements ItemFactoryInterface {
-    public function createCurrentItem(Item $item): mixed
+    public function createCurrentItem(Item $item): ItemInterface
     {
         return match ($item->name) {
             'Aged Brie' => new AgedBrie(),
