@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace GildedRose\Models;
 
 use GildedRose\Interfaces\ItemInterface;
+use GildedRose\Interfaces\LegendaryItem;
 
-class Sulfuras implements ItemInterface {
+class Sulfuras extends LegendaryItem implements ItemInterface  {
     public function updateItemQuality(Item $item): self
     {
-        $item->quality = 80;
         return $this;
     }
-
 }

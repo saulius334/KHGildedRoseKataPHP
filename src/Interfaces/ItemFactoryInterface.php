@@ -7,5 +7,5 @@ namespace GildedRose\Interfaces;
 use GildedRose\Models\Item;
 
 interface ItemFactoryInterface {
-    public function createCurrentItem(Item $item): ItemInterface;
+    public function createCurrentItem(Item $item): ItemInterface|LegendaryItem;
 }

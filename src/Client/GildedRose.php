@@ -22,6 +22,7 @@ final class GildedRose
                 $item->sell_in--;
             }
             $itemToUpdate = $currentItem->createCurrentItem($item);
+            // $itemToUpdate->sellInMinus($item);
             $itemToUpdate->updateItemQuality($item);
         }
     }
