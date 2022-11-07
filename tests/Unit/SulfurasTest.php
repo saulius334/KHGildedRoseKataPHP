@@ -4,42 +4,29 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Generator;
 use GildedRose\Models\Item;
-use GildedRose\Client\GildedRose;
 use PHPUnit\Framework\TestCase;
+use GildedRose\Client\GildedRose;
 
 class SulfurasTest extends TestCase
 {
-    public function testSulfurasUpdate(): void {
-        $items = [new Item('Sulfuras, Hand of Ragnaros', 10, 50)];
-        $gildedRose = new GildedRose($items);
+    /**
+    * @dataProvider dataProvider
+    */
+    public function testSulfuras(array $stats, array $expected): void
+    {
+        $gildedRose = new GildedRose([new Item('Sulfuras, Hand of Ragnaros', $stats[0], $stats[1])]);
         $gildedRose->updateQuality();
-        $this->assertEquals($items[0]->name,'Sulfuras, Hand of Ragnaros');
-        $this->assertEquals($items[0]->sell_in,10);
-        $this->assertEquals($items[0]->quality,80);
+        $this->assertEquals('Sulfuras, Hand of Ragnaros', $gildedRose->items[0]->name);
+        $this->assertEquals($expected[0], $gildedRose->items[0]->sell_in);
+        $this->assertEquals($expected[1], $gildedRose->items[0]->quality);
     }
-    public function testSulfurasSellinZeroUpdate(): void {
-        $items = [new Item('Sulfuras, Hand of Ragnaros', 0, 10)];
-        $gildedRose = new GildedRose($items);
-        $gildedRose->updateQuality();
-        $this->assertEquals($items[0]->name,'Sulfuras, Hand of Ragnaros');
-        $this->assertEquals($items[0]->sell_in,0);
-        $this->assertEquals($items[0]->quality,80);
-    }
-    public function testSulfurasSellinBelowZeroUpdate(): void {
-        $items = [new Item('Sulfuras, Hand of Ragnaros', -5, -5)];
-        $gildedRose = new GildedRose($items);
-        $gildedRose->updateQuality();
-        $this->assertEquals($items[0]->name,'Sulfuras, Hand of Ragnaros');
-        $this->assertEquals($items[0]->sell_in,-5);
-        $this->assertEquals($items[0]->quality,80);
-    }
-    public function testSulfurasSellinMaxQualityUpdate(): void {
-        $items = [new Item('Sulfuras, Hand of Ragnaros', 0, 80)];
-        $gildedRose = new GildedRose($items);
-        $gildedRose->updateQuality();
-        $this->assertEquals($items[0]->name,'Sulfuras, Hand of Ragnaros');
-        $this->assertEquals($items[0]->sell_in,0);
-        $this->assertEquals($items[0]->quality,80);
+    public function dataProvider(): Generator
+    {
+        yield 'SulfurasUpdate' => [[10,50], [10, 80]];
+        yield 'SulfurasSellinZeroUpdate' => [[0,10], [0, 80]];
+        yield 'SulfurasSellinBelowZeroUpdate' => [[-5,-5], [-5, 80]];
+        yield 'SulfurasSellinMaxQualityUpdate' => [[0,80], [0, 80]];
     }
 }

@@ -4,34 +4,28 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Generator;
 use GildedRose\Models\Item;
-use GildedRose\Client\GildedRose;
 use PHPUnit\Framework\TestCase;
+use GildedRose\Client\GildedRose;
 
 class VestTest extends TestCase
 {
-    public function testVestUpdate(): void {
-        $items = [new Item('+5 Dexterity Vest', 15, 5)];
-        $gildedRose = new GildedRose($items);
+    /**
+    * @dataProvider dataProvider
+    */
+    public function testVest(array $stats, array $expected): void
+    {
+        $gildedRose = new GildedRose([new Item('+5 Dexterity Vest', $stats[0], $stats[1])]);
         $gildedRose->updateQuality();
-        $this->assertEquals($items[0]->name,'+5 Dexterity Vest');
-        $this->assertEquals($items[0]->sell_in,14);
-        $this->assertEquals($items[0]->quality,4);
+        $this->assertEquals('+5 Dexterity Vest', $gildedRose->items[0]->name);
+        $this->assertEquals($expected[0], $gildedRose->items[0]->sell_in);
+        $this->assertEquals($expected[1], $gildedRose->items[0]->quality);
     }
-    public function testVestSellinBelowZeroUpdate(): void {
-        $items = [new Item('+5 Dexterity Vest', -2, 5)];
-        $gildedRose = new GildedRose($items);
-        $gildedRose->updateQuality();
-        $this->assertEquals($items[0]->name,'+5 Dexterity Vest');
-        $this->assertEquals($items[0]->sell_in,-3);
-        $this->assertEquals($items[0]->quality,3);
-    }
-    public function testVestQualityZeroUpdate(): void {
-        $items = [new Item('+5 Dexterity Vest', -2, 0)];
-        $gildedRose = new GildedRose($items);
-        $gildedRose->updateQuality();
-        $this->assertEquals($items[0]->name,'+5 Dexterity Vest');
-        $this->assertEquals($items[0]->sell_in,-3);
-        $this->assertEquals($items[0]->quality,-2);
+    public function dataProvider(): Generator
+    {
+        yield 'VestUpdate' => [[15,5], [14, 4]];
+        yield 'VestSellinBelowZeroUpdate' => [[-2,5], [-3, 3]];
+        yield 'VestQualityZeroUpdate' => [[-2,0], [-3, 0]];
     }
 }

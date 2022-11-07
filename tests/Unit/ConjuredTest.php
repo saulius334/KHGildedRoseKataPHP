@@ -4,42 +4,30 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Generator;
 use GildedRose\Models\Item;
-use GildedRose\Client\GildedRose;
 use PHPUnit\Framework\TestCase;
+use GildedRose\Client\GildedRose;
 
 class ConjuredTest extends TestCase
 {
-    public function testConjuredUpdate(): void {
-        $items = [new Item('Conjured Mana Cake', 50, 50)];
-        $gildedRose = new GildedRose($items);
+    /**
+    * @dataProvider dataProvider
+    */
+    public function testConjured(array $stats, array $expected): void
+    {
+        $gildedRose = new GildedRose([new Item('Conjured Mana Cake', $stats[0], $stats[1])]);
         $gildedRose->updateQuality();
-        $this->assertEquals($items[0]->name,'Conjured Mana Cake');
-        $this->assertEquals($items[0]->sell_in,49);
-        $this->assertEquals($items[0]->quality,48);
+        $this->assertEquals('Conjured Mana Cake', $gildedRose->items[0]->name);
+        $this->assertEquals($expected[0], $gildedRose->items[0]->sell_in);
+        $this->assertEquals($expected[1], $gildedRose->items[0]->quality);
     }
-    public function testConjuredSellinZeroUpdate(): void {
-        $items = [new Item('Conjured Mana Cake', 0, 50)];
-        $gildedRose = new GildedRose($items);
-        $gildedRose->updateQuality();
-        $this->assertEquals($items[0]->name,'Conjured Mana Cake');
-        $this->assertEquals($items[0]->sell_in,-1);
-        $this->assertEquals($items[0]->quality,46);
-    }
-    public function testConjuredSellinBelowZeroUpdate(): void {
-        $items = [new Item('Conjured Mana Cake', -5, 50)];
-        $gildedRose = new GildedRose($items);
-        $gildedRose->updateQuality();
-        $this->assertEquals($items[0]->name,'Conjured Mana Cake');
-        $this->assertEquals($items[0]->sell_in,-6);
-        $this->assertEquals($items[0]->quality,46);
-    }
-    public function testConjuredQualityZeroUpdate(): void {
-        $items = [new Item('Conjured Mana Cake', -5, 0)];
-        $gildedRose = new GildedRose($items);
-        $gildedRose->updateQuality();
-        $this->assertEquals($items[0]->name,'Conjured Mana Cake');
-        $this->assertEquals($items[0]->sell_in,-6);
-        $this->assertEquals($items[0]->quality,-4);
+    public function dataProvider(): Generator
+    {
+        yield 'ConjuredUpdate' => [[50,50], [49, 48]];
+        yield 'ConjuredSellinZeroUpdate' => [[0,50], [-1, 46]];
+        yield 'ConjuredSellinBelowZeroUpdate' => [[-5,50], [-6, 46]];
+        yield 'ConjuredQualityZeroUpdate' => [[-5,0], [-6, 0]];
+        yield 'ConjuredMaxQualityUpdate' => [[50,99999], [49, 50]];
     }
 }

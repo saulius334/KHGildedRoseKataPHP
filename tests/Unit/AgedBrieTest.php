@@ -4,58 +4,31 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Generator;
 use GildedRose\Models\Item;
 use GildedRose\Client\GildedRose;
 use PHPUnit\Framework\TestCase;
 
 class AgedBrieTest extends TestCase
 {
-    public function testBrieUpdate(): void {
-        $items = [new Item('Aged Brie', 15, 20)];
-        $gildedRose = new GildedRose($items);
+    /**
+    * @dataProvider dataProvider
+    */
+    public function testAgedBrie(array $stats, array $expected): void
+    {
+        $gildedRose = new GildedRose([new Item('Aged Brie', $stats[0], $stats[1])]);
         $gildedRose->updateQuality();
-        $this->assertEquals($items[0]->name,'Aged Brie');
-        $this->assertEquals($items[0]->sell_in,14);
-        $this->assertEquals($items[0]->quality,21);
+        $this->assertEquals('Aged Brie', $gildedRose->items[0]->name);
+        $this->assertEquals($expected[0], $gildedRose->items[0]->sell_in);
+        $this->assertEquals($expected[1], $gildedRose->items[0]->quality);
     }
-    public function testBrieSellinZeroUpdate(): void {
-        $items = [new Item('Aged Brie', 0, 10)];
-        $gildedRose = new GildedRose($items);
-        $gildedRose->updateQuality();
-        $this->assertEquals($items[0]->name,'Aged Brie');
-        $this->assertEquals($items[0]->sell_in,-1);
-        $this->assertEquals($items[0]->quality,12);
-    }
-    public function testBrieSellinBelowZeroUpdate(): void {
-        $items = [new Item('Aged Brie', -10, 10)];
-        $gildedRose = new GildedRose($items);
-        $gildedRose->updateQuality();
-        $this->assertEquals($items[0]->name,'Aged Brie');
-        $this->assertEquals($items[0]->sell_in,-11);
-        $this->assertEquals($items[0]->quality,12);
-    }
-    public function testBrieSellinMaxQualityUpdate(): void {
-        $items = [new Item('Aged Brie', 2, 50)];
-        $gildedRose = new GildedRose($items);
-        $gildedRose->updateQuality();
-        $this->assertEquals($items[0]->name,'Aged Brie');
-        $this->assertEquals($items[0]->sell_in,1);
-        $this->assertEquals($items[0]->quality,50);
-    }
-    public function testBrieSellin49QualityUpdate(): void {
-        $items = [new Item('Aged Brie', 5, 49)];
-        $gildedRose = new GildedRose($items);
-        $gildedRose->updateQuality();
-        $this->assertEquals($items[0]->name,'Aged Brie');
-        $this->assertEquals($items[0]->sell_in,4);
-        $this->assertEquals($items[0]->quality,50);
-    }
-    public function testBrieSellinBelowZeroMaxQualityUpdate(): void {
-        $items = [new Item('Aged Brie', -5, 50)];
-        $gildedRose = new GildedRose($items);
-        $gildedRose->updateQuality();
-        $this->assertEquals($items[0]->name,'Aged Brie');
-        $this->assertEquals($items[0]->sell_in,-6);
-        $this->assertEquals($items[0]->quality,50);
+    public function dataProvider(): Generator
+    {
+        yield 'BrieUpdate' => [[15,20], [14, 21]];
+        yield 'BrieSellinZeroUpdate' => [[0,10], [-1, 12]];
+        yield 'BrieSellinBelowZeroUpdate' => [[-10,10], [-11, 12]];
+        yield 'BrieSellinMaxQualityUpdate' => [[2,50], [1, 50]];
+        yield 'BrieSellin49QualityUpdate' => [[5,49], [4, 50]];
+        yield 'BrieSellinBelowZeroMaxQualityUpdate' => [[-5,50], [-6, 50]];
     }
 }
